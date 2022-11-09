@@ -1,7 +1,7 @@
 import { paste } from '@testing-library/user-event/dist/paste';
 import { useState } from 'react';
 export default function Ventas() {
-    //Definir los estados de este componente
+    //Definir los estados de este componente.
     const [ident, setIdent] = useState('');
     const [lastname, setLastname] = useState('');
     const [name, setName] = useState('');
