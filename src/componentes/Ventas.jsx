@@ -1,5 +1,9 @@
 import { paste } from '@testing-library/user-event/dist/paste';
 import { useState } from 'react';
+
+function formatNumber(number){
+    return new Intl.NumberFormat().format(number)
+}
 export default function Ventas() {
     //Definir los estados de este componente.
     const [ident, setIdent] = useState('');
@@ -26,7 +30,7 @@ export default function Ventas() {
                 else {
                     com = (parseFloat(price) * 0.03);
                 }
-                setCommission(com)
+                setCommission(formatNumber(com))
 
                 let bonu;
                 if (price >= 80000000) {
@@ -35,7 +39,7 @@ export default function Ventas() {
                 else {
                     bonu = 0;
                 }
-                setBonus(bonu);
+                setBonus(formatNumber(bonu));
             }
             else {
                 alert("Ingrese un valor que este entre 1.000.000 y 100.000.000")
@@ -59,14 +63,14 @@ export default function Ventas() {
     }
     return (
         <div className="container">
-            <center><h2>Ventas Pepito </h2></center>
+            <center><h2>Pepito Sales</h2></center>
             <form onSubmit={handleSubmit}>
                 <div className="row mt-3">
                     <div className="col">
-                        <label htmlFor="Ident">Identificación</label>
+                        <label htmlFor="Ident">Identification</label>
                         <input
-                            type="text"
-                            placeholder="Identificacion"
+                            type="number"
+                            placeholder="Identification"
                             id="ident"
                             name="ident"
                             className='form-control'
@@ -75,10 +79,10 @@ export default function Ventas() {
                         />
                     </div>
                     <div className="col">
-                        <label htmlFor="lastname">Apellidos</label>
+                        <label htmlFor="lastname">Last Name</label>
                         <input
                             type="text"
-                            placeholder='Apellido'
+                            placeholder='Last Name'
                             id='lastname'
                             name='lastname'
                             className='form-control'
@@ -87,10 +91,10 @@ export default function Ventas() {
                         />
                     </div>
                     <div className="col">
-                        <label htmlFor="name">Nombre</label>
+                        <label htmlFor="name">Name</label>
                         <input
                             type="text"
-                            placeholder='Nombre'
+                            placeholder='Name'
                             id='name'
                             name='name'
                             className='form-control'
@@ -101,36 +105,37 @@ export default function Ventas() {
                 </div>
                 <div className="row mt-3">
                     <div className="col">
-                        <label htmlFor="zone">Zona</label>
+                        <label htmlFor="zone">Zone</label>
                         <select
                             id="zone"
                             name="zone"
                             className='form-control'
                             value={zone}
                             onChange={e => setZone(e.target.value)}>
-                            <option value="" disabled>Seleccione una zona</option>
-                            <option value="north">Norte</option>
-                            <option value="south">Sur</option>
-                            <option value="east">Oriente</option>
+                            <option value="" disabled>Selectec a zone</option>
+                            <option value="north">North</option>
+                            <option value="south">South</option>
+                            <option value="east">East</option>
                         </select>
                     </div>
                     <div className="col">
-                        <label htmlFor="date">Fecha de venta</label>
+                        <label htmlFor="date">Sale Date</label>
                         <input
                             type="date"
-                            placeholder='Fecha de venta'
+                            placeholder='Sale Date'
                             id='date'
                             name='date'
+                            min="2022-11-10" max="2025-12-31"
                             className='form-control'
                             onChange={e => setDate(e.target.value)}
                             value={date}
                         />
                     </div>
                     <div className="col">
-                        <label htmlFor="price">Valor venta</label>
+                        <label htmlFor="price">Sales Value</label>
                         <input
-                            type="text"
-                            placeholder='Valor venta'
+                            type="number"
+                            placeholder='Sales Value'
                             id='price'
                             name='price'
                             className='form-control'
@@ -141,22 +146,23 @@ export default function Ventas() {
                 </div>
                 <div className="row mt-3">
                     <div className="col-4">
-                        <label htmlFor="commission">Valor comisión</label>
+                        <label htmlFor="commission">Sales Commission</label>
                         <input
                             type="text"
-                            placeholder="Valor comisión"
+                            placeholder="Sales Commission"
                             id="commission"
                             name="commission"
                             className='form-control'
                             onChange={event => setCommission(event.target.value)}
                             value={commission}
+                            
                         />
                     </div>
                     <div className="col-4">
-                        <label htmlFor="bonus">Bonificación</label>
+                        <label htmlFor="bonus">Bonus</label>
                         <input
                             type="text"
-                            placeholder='Bonificación'
+                            placeholder='Bonus'
                             id='bonus'
                             name='bonus'
                             className='form-control'
@@ -170,12 +176,12 @@ export default function Ventas() {
                         <button
                             type='Submit'
                             className='btn btn-primary' >
-                            Calcular
+                            Calculate
                         </button>
                     </div>
                     <div className="col-4">
                         <form onSubmit={onClean}>
-                            <button className='btn btn-dark'>Limpiar</button>
+                            <button className='btn btn-dark'>Clean</button>
                         </form>
                     </div>
                 </div>
