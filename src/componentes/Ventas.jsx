@@ -7,40 +7,45 @@ export default function Ventas() {
     const [name, setName] = useState('');
     const [zone, setZone] = useState('');
     const [date, setDate] = useState('');
-    const [price, setprice] = useState('');
+    const [price, setPrice] = useState('');
     const [commission, setCommission] = useState('');
     const [bonus, setBonus] = useState('');
     //Definir los métodos
     const handleSubmit = (event) => {
         event.preventDefault(); //No hace postback (va al servidor y cuando regrese del servicdor borra la información en el formulario)
         //validar que todos los datos se hayan diligenciado
-        if (ident != "" && fullname != "" && course != "" && qualify1 != "" && qualify2 != "" && qualify3 != ""){
-            if(qualify1>0 && qualify1<=5 || qualify2 > 0 && qualify2 <=5 || qualify3>0 && qualify3<=5){
-            //setFinal((parseFloat(qualify1)+parseFloat(qualify2)+parseFloat(qualify3))/3);
-            let definitiva=(parseFloat(qualify1)+parseFloat(qualify2)+parseFloat(qualify3))/3
-            setFinal(definitiva.toFixed(1));
-            let obs;
-            if (definitiva>=3){
-                obs="Gana";
-            }
-            else if(definitiva<2){
-                obs="Pierde"
-            }
-            else{
-                obs="Habilita"
-            }
-                if(obs=="Habilita"&& course =="ma"){
-                    obs="Esta asignatura no se puede habilitar "
+        if (ident != "" && lastname != "" && zone != "" && name != "" && date != "" && price != "") {
+            if (price >= 1000000 && price <= 100000000) {
+                let com;
+                if (zone == "norte") {
+                    com = (parseFloat(price) * 0.02);
                 }
-                setObservation(obs)
+                else if (zone == "south") {
+                    com = (parseFloat(price) * 0.025);
+                }
+                else {
+                    com = (parseFloat(price) * 0.03);
+                }
+                setCommission(com)
+
+                let bonu;
+                if (price >= 80000000) {
+                    bonu = 50000;
+                }
+                else {
+                    bonu = 0;
+                }
+                setBonus(bonu);
+            }
+            else {
+                alert("Ingrese un valor que este entre 1.000.000 y 100.000.000")
+            }
         }
-        else{
-            alert("Debe ingresar todos los datos...")
+        else {
+            alert("Debe ingresar todos los datos ...")
         }
-        
     }
-}
-    function onClean(e){
+    function onClean(e) {
         e.preventDefault();
         //Borrar el contenido de los estados
         setIdent("");
@@ -54,7 +59,7 @@ export default function Ventas() {
     }
     return (
         <div className="container">
-            <h2>Ventas</h2>
+            <center><h2>Ventas Pepito </h2></center>
             <form onSubmit={handleSubmit}>
                 <div className="row mt-3">
                     <div className="col">
@@ -103,16 +108,16 @@ export default function Ventas() {
                             className='form-control'
                             value={zone}
                             onChange={e => setZone(e.target.value)}>
-                            <option value=""disabled>Seleccione una zona</option>
-                            <option value="mv1">Norte</option>
-                            <option value="w1">Sur</option>
-                            <option value="ma">Oriente</option>
-                             </select>
+                            <option value="" disabled>Seleccione una zona</option>
+                            <option value="north">Norte</option>
+                            <option value="south">Sur</option>
+                            <option value="east">Oriente</option>
+                        </select>
                     </div>
                     <div className="col">
                         <label htmlFor="date">Fecha de venta</label>
                         <input
-                            type="date"//text?
+                            type="date"
                             placeholder='Fecha de venta'
                             id='date'
                             name='date'
@@ -129,13 +134,13 @@ export default function Ventas() {
                             id='price'
                             name='price'
                             className='form-control'
-                            onChange={e => setprice(e.target.value)}
+                            onChange={e => setPrice(e.target.value)}
                             value={price}
                         />
                     </div>
                 </div>
                 <div className="row mt-3">
-                    <div className="col">
+                    <div className="col-4">
                         <label htmlFor="commission">Valor comisión</label>
                         <input
                             type="text"
@@ -147,7 +152,7 @@ export default function Ventas() {
                             value={commission}
                         />
                     </div>
-                    <div className="col">
+                    <div className="col-4">
                         <label htmlFor="bonus">Bonificación</label>
                         <input
                             type="text"
@@ -161,18 +166,19 @@ export default function Ventas() {
                     </div>
                 </div>
                 <div className="row mt-3">
-                    <div className="col">
+                    <div className="col-4">
                         <button
                             type='Submit'
-                            className='btn btn-success' >
+                            className='btn btn-primary' >
                             Calcular
                         </button>
                     </div>
+                    <div className="col-4">
+                        <form onSubmit={onClean}>
+                            <button className='btn btn-dark'>Limpiar</button>
+                        </form>
+                    </div>
                 </div>
-
-            </form>
-            <form onSubmit={onClean}>
-                <button className='btn btn-dark'>Limpiar</button>
             </form>
         </div>
     );
